@@ -1,0 +1,31 @@
+{
+  "name": "@Giardi-Ventures/SceneIt-Core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec \"tsc && yalc publish\" --ext ts",
+    "test": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Giardi-Ventures/SceneIt-Core.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Giardi-Ventures/SceneIt-Core/issues"
+  },
+  "homepage": "https://github.com/Giardi-Ventures/SceneIt-Core#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "nodemon": "^3.1.9",
+    "release-it": "^18.1.1",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
+    "zod": "^3.24.1"
+  }
+}
