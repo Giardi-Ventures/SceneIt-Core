@@ -1,4 +1,4 @@
-import {Account} from "../account";
+import {Account} from "../account/account";
 
 export type Password = {
   id: number;
@@ -9,8 +9,9 @@ export type Password = {
   salt: string;
   content: string;
 
-  dateArchived: Date;
-
+  createdAt: Date | null;
+  updatedAt: Date | null;
+  deletedAt: Date | null;
 
   account?: Account | null;
 }

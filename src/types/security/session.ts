@@ -1,4 +1,4 @@
-import {Account} from "../account";
+import {Account} from "../account/account";
 
 export type Session = {
   id: number;
