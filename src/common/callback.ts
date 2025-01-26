@@ -73,8 +73,6 @@ export class Callback<G = any> {
     this.error = error;
     this.data = data;
     this.url = url;
-
-    Object.assign(this, data);
   }
 
   // Static Success

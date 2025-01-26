@@ -3,9 +3,10 @@ import {ZodType} from "zod";
 
 export type RequestParams = {
   url: String;
-  body?: Object | null;
+  body?: Object | any | null;
   method?: "GET" | "POST" | "PATCH" | "DELETE";
-  schema?: ZodType
+  schema?: ZodType;
+  onCallback?: (callback: Callback) => void;
 };
 
 function getURL() {
@@ -13,7 +14,7 @@ function getURL() {
 }
 
 export async function apiRequest<T = any>(params: RequestParams): Promise<Callback<T>> {
-  let {url, schema, body = null, method = "GET"} = params;
+  let {url, schema, onCallback, body = null, method = "GET"} = params;
 
   if (schema) {
     const {success, error} = schema.safeParse(body);
@@ -53,7 +54,7 @@ export async function apiRequest<T = any>(params: RequestParams): Promise<Callba
         url += "?" + paramList.join("&");
       }
     } else {
-      requestPayload.body = JSON.stringify(body);
+      requestPayload.body = typeof body === "string" ? body : JSON.stringify(body);
     }
   }
 
@@ -103,5 +104,9 @@ export async function apiRequest<T = any>(params: RequestParams): Promise<Callba
 
   dataResponse.setUrl(getURL() + "/" + url);
 
+  onCallback && onCallback(dataResponse);
+
   return dataResponse;
 }
+
+export * from "./entry-api"

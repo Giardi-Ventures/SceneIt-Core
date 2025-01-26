@@ -9,11 +9,14 @@
 - Rating System
 - Invite System
 - Search
-- Watch System 
+- Where to Watch System 
+- Watch List
 - Lists
 - Comments
   - https://www.npmjs.com/package/@giphy/react-native-sdk
+- Google Login
 
 Code Needs
 - Logging
 - Events :)
+- Username Format
