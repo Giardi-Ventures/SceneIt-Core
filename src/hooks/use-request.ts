@@ -1,16 +1,16 @@
 import {useState} from "react";
-import {Callback, CommonError, SimpleError} from "../common";
+import {Callback, CommonError, RequestCallback, SimpleError} from "../common";
 
 type CoreState<DataType = any> = {
   data: DataType | null;
   error: Error | null;
-  request: Callback<DataType> | null;
+  request: RequestCallback<DataType> | null;
   isLoading: boolean;
 };
 
 export function useRequest<RequestParams, DataResponse>(
-  apiRequest: (params?: RequestParams) => Promise<Callback<DataResponse>>,
-  onResolve?: (data: Callback<DataResponse>) => void,
+  apiRequest: (params?: RequestParams) => Promise<RequestCallback<DataResponse>>,
+  onResolve?: (data: RequestCallback<DataResponse>) => void,
 ) {
   const [{data, error, isLoading, request}, setState] = useState<CoreState<DataResponse>>(
     {
@@ -21,7 +21,7 @@ export function useRequest<RequestParams, DataResponse>(
     },
   );
 
-  const dispatch = async (params?: RequestParams): Promise<Callback> => {
+  const dispatch = async (params?: RequestParams): Promise<RequestCallback> => {
     setState({request: null, error: null, data: null, isLoading: true});
     console.log("USE IT DAD");
 
@@ -36,6 +36,8 @@ export function useRequest<RequestParams, DataResponse>(
 
       postLoadingState.data = requestResponse.data;
       postLoadingState.request = requestResponse;
+
+      setState(postLoadingState);
 
       return requestResponse;
     } catch (e) {

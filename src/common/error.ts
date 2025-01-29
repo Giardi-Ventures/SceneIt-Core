@@ -1,4 +1,4 @@
-import {Callback, ResponseType} from "./callback";
+import {Callback, ResponseType} from "./callbacks/callback";
 
 export type Error = {
   code: string;

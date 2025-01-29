@@ -1,4 +1,4 @@
-import {login, register} from "../src/apis/entry-api";
+import {login, register} from "../src/apis/entry-apis";
 
 setTimeout(async () => {
   // const response = await register({
