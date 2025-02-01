@@ -2,6 +2,7 @@ import {CommonRequestCallback, RequestCallback} from "../../common/callbacks/req
 import {Callback, CommonError, SimpleError} from "../../common";
 import {ZodType} from "zod";
 import {getURL} from "../index";
+import {AuthState, globalStore} from "../../redux";
 
 export type RequestParams = {
   url: string;
@@ -29,17 +30,18 @@ export async function apiRequest<T = any>(
     }
   }
 
-  // const {config, auth}: {config: ConfigState; auth: AuthState} =
-  //   getGlobalStore().getState();
+  const {auth}: {auth: AuthState} = globalStore.getState();
 
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
   };
 
-  // if (auth.token) {
-  //   headers["Authorization"] = auth.token;
-  // }
+  if (auth.token) {
+    headers["authorization"] = auth.token;
+  }
+
+  console.log("Auth token", auth);
 
   const requestPayload: any = {
     method: method,

@@ -1,6 +1,6 @@
 export * from "./entry-apis";
-export * from "./media-apis";
 export * from "./requests";
+export * from "./media";
 
 export function getURL(url: string) {
   if (url.startsWith("http")) {

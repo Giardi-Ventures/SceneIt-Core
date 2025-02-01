@@ -15,8 +15,14 @@
 - Comments
   - https://www.npmjs.com/package/@giphy/react-native-sdk
 - Google Login
+- Friends
 
 Code Needs
 - Logging
 - Events :)
 - Username Format
+
+Schema:
+- Ratings
+- Reviews
+- Watches

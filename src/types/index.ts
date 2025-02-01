@@ -1,3 +1,4 @@
 export * from "./security"
 export * from "./account/account"
 export * from "./media/media"
+export * from "./rating/rating"
