@@ -5,14 +5,8 @@ export type Rating = {
   unique: string;
 
   accountId: number;
+  mediaUnique: string, // mov_10000
 
-  mediaId: number;
-  mediaType: "movie" | "tv" | "person";
-
-  title: string;
-  logo: string;
-
-  genres: number[],
   genreRatings: GenreRating[];
 
   relativeScore: number;

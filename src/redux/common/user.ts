@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {useSelector} from "react-redux";
-import {Account} from "../types";
+import {Account} from "../../types";
 
 export interface UserState {
   account: Account | null;

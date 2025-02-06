@@ -1,6 +1,6 @@
 export type GenreRating = {
   id?: number;
-  unique: string;
+  unique?: string;
 
   accountId: number;
 

@@ -4,11 +4,8 @@ import {apiRequest, listRequest} from "../requests";
 export type RatingParamsType = z.infer<typeof RatingParams>;
 export const RatingParams = object({
   rating: z.enum(["liked", "disliked", "loved"]),
+  mediaType: z.enum(["movie", "tv", "person"]),
   mediaId: number(),
-  // Should fetch title and genres
-  title: string(),
-  logo: string(),
-  genres: array(number()),
 
   comparisons: array(
     object({
@@ -31,8 +28,8 @@ export async function rateMedia(body: RatingParamsType) {
 export type ComparisonParamsType = z.infer<typeof ComparisonParams>;
 export const ComparisonParams = object({
   rating: z.enum(["liked", "disliked", "loved"]),
-  genres: array(number()),
-  mediaId: string(),
+  mediaType: z.enum(["movie", "tv", "person"]),
+  mediaId: number(),
 });
 
 export async function fetchComparisons(body: ComparisonParamsType) {
@@ -41,5 +38,18 @@ export async function fetchComparisons(body: ComparisonParamsType) {
     method: "POST",
     schema: ComparisonParams,
     body,
+  });
+}
+
+export type FetchRatingsParamsType = z.infer<typeof FetchRatingsParams>;
+export const FetchRatingsParams = object({
+  mediaType: z.enum(["movie", "tv", "person"]).optional(),
+});
+
+export async function fetchRatings(body?: FetchRatingsParamsType) {
+  return listRequest({
+    url: "ratings",
+    method: "GET",
+    schema: FetchRatingsParams,
   });
 }

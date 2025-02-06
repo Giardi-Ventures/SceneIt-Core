@@ -1,7 +1,7 @@
 import z from "zod";
 import {apiRequest} from "./index";
 import {globalStore, updateAuth} from "../redux";
-import {updateUser} from "../redux/user";
+import {updateUser} from "../redux/common/user";
 import {useRequest} from "../hooks";
 
 export const useLogin = () => useRequest(login);

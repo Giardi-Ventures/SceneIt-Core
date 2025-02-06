@@ -8,6 +8,12 @@ export type Media = {
   poster?: string;
   adult: boolean;
   language: string;
-  genres: number[];
+  genres: Genre[];
   popularity: number;
 };
+
+export type Genre = {
+  id: number;
+  name: string;
+}
+

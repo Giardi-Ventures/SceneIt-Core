@@ -1,5 +1,5 @@
-import {authReducer} from "./auth";
-import {userReducer} from "./user";
+import {authReducer} from "./common/auth";
+import {userReducer} from "./common/user";
 import {EnhancedStore} from "@reduxjs/toolkit";
 
 export let globalStore : EnhancedStore = null;
@@ -12,5 +12,5 @@ export const CoreReducers = {
   user: userReducer,
 };
 
-export * from "./auth";
-export * from "./user";
+export * from "./common/auth";
+export * from "./common/user";
