@@ -1,4 +1,4 @@
-import {Event, ResponseType} from "../index";
+import {Error, Event, ResponseType} from "../index";
 import {listRequest} from "../../apis";
 import {Callback, CallbackParams} from "./callback";
 
@@ -26,6 +26,13 @@ export function CommonRequestCallback<G = any>(
   object = {},
 ): RequestCallback<G> {
   return new RequestCallback<G>({...object, data});
+}
+
+export function ErrorRequestCallback(
+  error: Error,
+  object = {},
+): RequestCallback {
+  return new RequestCallback({...object, error});
 }
 
 export class RequestCallback<G = any> extends Callback<G> {

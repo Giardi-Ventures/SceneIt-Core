@@ -1,16 +1,45 @@
 import {authReducer} from "./common/auth";
 import {userReducer} from "./common/user";
 import {EnhancedStore} from "@reduxjs/toolkit";
+import {viewingReducer} from "./core/viewing";
 
-export let globalStore : EnhancedStore = null;
-export function setGlobalStore(store : EnhancedStore) {
+export let globalStore: EnhancedStore = null;
+
+export function setGlobalStore(store: EnhancedStore) {
   globalStore = store;
 }
 
-export const CoreReducers = {
+export const CommonReducers = {
   auth: authReducer,
   user: userReducer,
 };
 
+export const CoreReducers = {
+  viewing: viewingReducer,
+};
+
+function isValidSlice(slice: string) {}
+
+function updateState() {
+  return (dispatch, state) => {
+    console.log("Bate", state);
+    return state;
+  };
+}
+
+// export function updateGlobalState() {
+//   globalStore.dispatch(updateViewingStore({}))
+// }
+
+export function updateReduxSlice(slice: string, data: any) {
+  // Update whole object on slice
+}
+
+export function updateSliceItem(slice: string, id: string | number, data: any) {
+  // Updates just one part
+}
+
 export * from "./common/auth";
 export * from "./common/user";
+export * from "./core/viewing";
+export * from "./util/redux-global";

@@ -1,5 +1,6 @@
 export type Media = {
   id: number;
+  unique: string;
   type: "person" | "tv" | "movie";
   name: string;
   release: Date;

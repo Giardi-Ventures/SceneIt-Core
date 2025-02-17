@@ -1,7 +1,7 @@
 import {useState} from "react";
-import {Callback, CommonError, RequestCallback, SimpleError} from "../common";
+import {Callback, CommonError, RequestCallback, SimpleError} from "../../common";
 import {useRequest} from "./use-request";
-import {listRequest, ListRequestParams} from "../apis";
+import {listRequest, ListRequestParams} from "../../apis";
 
 type CoreState<DataType = any> = {
   data: DataType | null;
@@ -13,7 +13,7 @@ type CoreState<DataType = any> = {
 };
 
 export function useListRequest<RequestParams, DataResponse>(
-  listParams: ListRequestParams,
+  listParams: ListRequestParams<DataResponse>,
   onResolve?: (data: RequestCallback<DataResponse>) => void,
 ) {
   const [{data, error, isLoading, request, hasNext, hasPrevious}, setState] = useState<

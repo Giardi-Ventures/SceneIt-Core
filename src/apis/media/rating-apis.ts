@@ -18,9 +18,9 @@ export const RatingParams = object({
 
 export async function rateMedia(body: RatingParamsType) {
   return apiRequest({
+    schema: RatingParams,
     url: "ratings/rate",
     method: "POST",
-    schema: RatingParams,
     body,
   });
 }
@@ -34,9 +34,9 @@ export const ComparisonParams = object({
 
 export async function fetchComparisons(body: ComparisonParamsType) {
   return listRequest({
+    schema: ComparisonParams,
     url: "ratings/comparisons",
     method: "POST",
-    schema: ComparisonParams,
     body,
   });
 }
@@ -48,8 +48,8 @@ export const FetchRatingsParams = object({
 
 export async function fetchRatings(body?: FetchRatingsParamsType) {
   return listRequest({
+    schema: FetchRatingsParams,
     url: "ratings",
     method: "GET",
-    schema: FetchRatingsParams,
   });
 }

@@ -1,7 +1,7 @@
 import {useState} from "react";
-import {Callback, CommonError, RequestCallback, SimpleError} from "../common";
+import {Callback, CommonError, RequestCallback, SimpleError} from "../../common";
 import {useRequest} from "./use-request";
-import {listRequest, ListRequestParams} from "../apis";
+import {listRequest, ListRequestParams} from "../../apis";
 import {useListRequest} from "./use-list-request";
 
 type State<DataType = any> = {
@@ -10,7 +10,7 @@ type State<DataType = any> = {
 };
 
 export function useInfiniteList<RequestParams, DataResponse = any[]>(
-  listParams: ListRequestParams,
+  listParams: ListRequestParams<DataResponse>,
   onResolve?: (data: RequestCallback<DataResponse>) => void,
 ) {
   const [{isRefreshing, data}, setState] = useState<State>({

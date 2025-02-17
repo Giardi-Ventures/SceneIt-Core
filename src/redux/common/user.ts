@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {useSelector} from "react-redux";
 import {Account} from "../../types";
+import {createCoreSlice} from "../util/redux-global";
 
 export interface UserState {
   account: Account | null;
@@ -10,7 +11,7 @@ const initialState: UserState = {
   account: null,
 };
 
-const userSlice = createSlice({
+const userSlice = createCoreSlice({
   name: "auth",
   initialState,
   reducers: {

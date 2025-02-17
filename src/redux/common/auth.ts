@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createCoreSlice} from "../util/redux-global";
 
 export interface AuthState {
   token: String | null;
@@ -8,7 +9,7 @@ const initialState: AuthState = {
   token: null,
 };
 
-const authSlice = createSlice({
+const authSlice = createCoreSlice({
   name: "auth",
   initialState,
   reducers: {

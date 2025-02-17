@@ -4,18 +4,19 @@ import {ZodType} from "zod";
 import {getURL} from "../index";
 import {AuthState, globalStore} from "../../redux";
 
-export type RequestParams = {
+export type RequestParams<T> = {
   url: string;
   body?: Object | any | null;
   method?: "GET" | "POST" | "PATCH" | "DELETE";
   schema?: ZodType;
-  onCallback?: (callback: Callback) => void;
+  onCallback?: (callback: Callback<T>) => void;
+  onSuccess?: (callback: T) => void;
 };
 
 export async function apiRequest<T = any>(
-  params: RequestParams,
+  params: RequestParams<T>,
 ): Promise<RequestCallback<T>> {
-  let {url, schema, onCallback, body = null, method = "GET"} = params;
+  let {url, schema, onCallback, onSuccess, body = null, method = "GET"} = params;
 
   if (schema) {
     const {success, error} = schema.safeParse(body);
@@ -110,6 +111,10 @@ export async function apiRequest<T = any>(
   dataResponse.url = getURL(url);
 
   onCallback && onCallback(dataResponse);
+
+  if (dataResponse.error === null) {
+    onSuccess && onSuccess(dataResponse.data);
+  }
 
   return dataResponse;
 }

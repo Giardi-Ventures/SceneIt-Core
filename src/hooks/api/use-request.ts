@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Callback, CommonError, RequestCallback, SimpleError} from "../common";
+import {Callback, CommonError, RequestCallback, SimpleError} from "../../common";
 
 type CoreState<DataType = any> = {
   data: DataType | null;
