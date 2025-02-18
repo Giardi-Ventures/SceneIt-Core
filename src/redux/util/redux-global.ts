@@ -93,7 +93,7 @@ interface UpdateParams<T> {
   newValue: Partial<T>;
 }
 
-function updateObjectInArray<T extends object>({
+export function updateObjectInArray<T extends object>({
   obj,
   path,
   id,

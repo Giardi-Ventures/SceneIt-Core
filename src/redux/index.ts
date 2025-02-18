@@ -2,6 +2,7 @@ import {authReducer} from "./common/auth";
 import {userReducer} from "./common/user";
 import {EnhancedStore} from "@reduxjs/toolkit";
 import {viewingReducer} from "./core/viewing";
+import {listReducer} from "./core/list";
 
 export let globalStore: EnhancedStore = null;
 
@@ -16,6 +17,7 @@ export const CommonReducers = {
 
 export const CoreReducers = {
   viewing: viewingReducer,
+  list: listReducer,
 };
 
 function isValidSlice(slice: string) {}
@@ -42,4 +44,5 @@ export function updateSliceItem(slice: string, id: string | number, data: any) {
 export * from "./common/auth";
 export * from "./common/user";
 export * from "./core/viewing";
+export * from "./core/list";
 export * from "./util/redux-global";
