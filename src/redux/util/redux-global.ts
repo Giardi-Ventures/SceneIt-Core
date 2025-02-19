@@ -55,8 +55,6 @@ export function createCoreSlice<
 
         const splits = path.split(".");
         if (splits[0] === name) {
-          console.log("We hit", JSON.stringify(state));
-
           updateObjectInArray({
             ...action.payload,
             path: splits.slice(1).join("."),
@@ -117,6 +115,8 @@ export function updateObjectInArray<T extends object>({
     const index = current.findIndex((item) => item[idKey] === id);
     if (index !== -1) {
       current[index] = {...current[index], ...newValue};
+    } else {
+      current.push(newValue);
     }
   }
 }

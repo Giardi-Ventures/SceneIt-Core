@@ -48,6 +48,9 @@ export async function removeFromWatchList(unique: string) {
     listId: watch.id,
   });
 
+
+  console.log("Data", error, watchList);
+
   if (error) throw error;
 
   globalStore.dispatch(updateListStore({watch: watchList}));

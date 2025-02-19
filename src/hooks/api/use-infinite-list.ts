@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Callback, CommonError, RequestCallback, SimpleError} from "../../common";
 import {useRequest} from "./use-request";
 import {listRequest, ListRequestParams} from "../../apis";
@@ -13,6 +13,7 @@ export function useInfiniteList<RequestParams, DataResponse = any[]>(
   listParams: ListRequestParams<DataResponse>,
   onResolve?: (data: RequestCallback<DataResponse>) => void,
 ) {
+  const [isClearing, setIsClearing] = useState(null);
   const [{isRefreshing, data}, setState] = useState<State>({
     isRefreshing: false,
     data: [],
@@ -20,10 +21,13 @@ export function useInfiniteList<RequestParams, DataResponse = any[]>(
 
   console.log("DATA IN INF", data);
 
-  const {isLoading, error, dispatch: listDispatch, hasNext, next} = useListRequest<
-    RequestParams,
-    DataResponse
-  >(listParams, (info) => {
+  const {
+    isLoading,
+    error,
+    dispatch: listDispatch,
+    hasNext,
+    next,
+  } = useListRequest<RequestParams, DataResponse>(listParams, (info) => {
     onResolve && onResolve(info);
 
     console.log("THIS IS DATA", data);
@@ -31,24 +35,32 @@ export function useInfiniteList<RequestParams, DataResponse = any[]>(
     if (info.error === null) {
       setState((prevState) => ({
         isRefreshing: false,
-        data: [...prevState.data, ...info.data as []], // Use latest state
+        data: [...prevState.data, ...(info.data as [])], // Use latest state
       }));
     }
   });
 
   const loadMore = async () => {
-    setState({data, isRefreshing: true});
+    if (!isRefreshing) {
+      setState({data, isRefreshing: true});
 
-    return next();
+      return next();
+    }
+
+    return null;
   };
 
-  const dispatch = async (data) => {
-    setState({data: [], isRefreshing: false});
+  useEffect(() => {
+    if (isClearing !== null) {
+      listDispatch(isClearing);
+      setIsClearing(null);
+    }
+  }, [isClearing]); // Dispatch only when clearing is done
 
-    setTimeout(() => {
-      listDispatch(data);
-    }, 1000);
-  }
+  const dispatch = async (data) => {
+    setState({data: [], isRefreshing: true});
+    setIsClearing(data); // Trigger the clearing effect
+  };
 
   console.log("DATA", data);
 

@@ -1,5 +1,6 @@
 import z, {object, array, number, string} from "zod";
 import {apiRequest, listRequest} from "../requests";
+import {globalStore, updateGlobalState, upsertGlobalStateArray} from "../../redux";
 
 export type RatingParamsType = z.infer<typeof RatingParams>;
 export const RatingParams = object({
@@ -18,10 +19,19 @@ export const RatingParams = object({
 
 export async function rateMedia(body: RatingParamsType) {
   return apiRequest({
-    schema: RatingParams,
-    url: "ratings/rate",
-    method: "POST",
     body,
+    method: "POST",
+    url: "ratings/rate",
+    schema: RatingParams,
+    onSuccess: (data) => {
+      globalStore.dispatch(
+        upsertGlobalStateArray({
+          id: data.id,
+          path: "rating.data",
+          newValue: data,
+        }),
+      );
+    },
   });
 }
 
@@ -48,6 +58,7 @@ export const FetchRatingsParams = object({
 
 export async function fetchRatings(body?: FetchRatingsParamsType) {
   return listRequest({
+    onSuccess: (data) => globalStore.dispatch(updateGlobalState("rating.data", data)),
     schema: FetchRatingsParams,
     url: "ratings",
     method: "GET",
