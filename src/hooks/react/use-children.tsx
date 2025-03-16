@@ -1,7 +1,7 @@
-import React, {ReactElement, useMemo} from "react";
+import React, {ReactElement, ReactNode, useMemo} from "react";
 
 export function useChildren<PropList>(
-  children: ReactElement | ReactElement[] | string,
+  children: ReactNode,
   component: any,
 ): ReactElement<PropList>[] {
   return useMemo(() => {

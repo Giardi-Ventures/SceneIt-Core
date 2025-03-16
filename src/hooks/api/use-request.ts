@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {Callback, CommonError, RequestCallback, SimpleError} from "../../common";
+import { useState } from "react";
+import { Error, RequestCallback, SimpleError } from "../../common";
 
 type CoreState<DataType = any> = {
   data: DataType | null;
@@ -12,44 +12,46 @@ export function useRequest<RequestParams, DataResponse>(
   apiRequest: (params?: RequestParams) => Promise<RequestCallback<DataResponse>>,
   onResolve?: (data: RequestCallback<DataResponse>) => void,
 ) {
-  const [{data, error, isLoading, request}, setState] = useState<CoreState<DataResponse>>(
-    {
-      data: null,
-      error: null,
-      request: null,
-      isLoading: false,
-    },
-  );
+  const [state, setState] = useState<CoreState<DataResponse>>({
+    data: null,
+    error: null,
+    request: null,
+    isLoading: true,
+  });
 
-  const dispatch = async (params?: RequestParams): Promise<RequestCallback> => {
-    setState({request: null, error: null, data: null, isLoading: true});
-    console.log("USE IT DAD");
-
-    const postLoadingState = {request: null, error: null, data: null, isLoading: false};
+  const dispatch = async (params?: RequestParams): Promise<RequestCallback<DataResponse> | null> => {
+    setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
-      const requestResponse = await apiRequest(params);
+      console.log("USE IT DAD");
 
+      const requestResponse = await apiRequest(params);
       console.log("We got here Mommy", requestResponse);
 
-      onResolve && onResolve(requestResponse);
+      if (onResolve) onResolve(requestResponse);
 
-      postLoadingState.data = requestResponse.data;
-      postLoadingState.request = requestResponse;
-
-      setState(postLoadingState);
+      setState({
+        data: requestResponse.data || null,
+        request: requestResponse,
+        error: requestResponse.error || null,
+        isLoading: false,
+      });
 
       return requestResponse;
     } catch (e) {
       console.log("WATS UP", e);
+      const errorObj = SimpleError("unknown_issue", e);
 
-      postLoadingState.error = SimpleError("unknown_issue", e);
-    } finally {
-      setState(postLoadingState);
+      // @ts-ignore
+      setState((prev) => ({
+        ...prev,
+        error: errorObj,
+        isLoading: false,
+      }));
+
+      return null;
     }
-
-    return postLoadingState.error;
   };
 
-  return {dispatch, isLoading, error, data, request};
+  return { dispatch, ...state };
 }

@@ -1,4 +1,7 @@
-import {CommonRequestCallback, RequestCallback} from "../../common/callbacks/request-callback";
+import {
+  CommonRequestCallback,
+  RequestCallback,
+} from "../../common/callbacks/request-callback";
 import {Callback, CommonError, SimpleError} from "../../common";
 import {ZodType} from "zod";
 import {getURL} from "../index";
@@ -28,6 +31,26 @@ export async function apiRequest<T = any>(
           data: error.flatten(),
         }),
       );
+    }
+  }
+
+  const directorySplit = url.split("/");
+  for (let split of directorySplit) {
+    if (split[0] === ":") {
+      const key = split.slice(1);
+
+      if (typeof body[key] === "undefined") {
+        return new RequestCallback(
+          CommonError({
+            code: "url_param_invalid",
+            message: key + " not found in url: " + url,
+          }),
+        );
+      }
+
+      url = url.replace(":" + key, body[key]);
+
+      delete body[key];
     }
   }
 

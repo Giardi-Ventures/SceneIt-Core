@@ -1,16 +1,18 @@
-import React, {ReactElement, useMemo} from "react";
+import React, {ReactElement, ReactNode, useMemo} from "react";
 
 export function useChild(
-  children: ReactElement | ReactElement[] | string,
+  children: ReactNode,
   component: any | any[],
-) {
+): ReactElement | undefined {
   if (!Array.isArray(component)) {
     component = [component];
   }
 
   return useMemo(() => {
     return React.Children.toArray(children).find((child: ReactElement) => {
+      console.log("Searching", child.type, component);
+
       return component.includes(child.type);
     });
-  }, [children]);
+  }, [children]) as ReactElement | undefined;
 }

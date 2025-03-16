@@ -57,6 +57,10 @@ export function useListRequest<RequestParams, DataResponse>(
       postLoadingState.hasPrevious = requestResponse.cursor.last !== null;
       postLoadingState.isLoading = false;
 
+      if (requestResponse.error) {
+        postLoadingState.error = requestResponse.error;
+      }
+
       setState(JSON.parse(JSON.stringify(postLoadingState)));
 
       return requestResponse;

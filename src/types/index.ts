@@ -1,5 +1,5 @@
+export * from "./media"
 export * from "./security"
 export * from "./account/account"
-export * from "./media/media"
 export * from "./rating/rating"
 export * from "./viewing/viewing"
